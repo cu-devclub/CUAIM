@@ -1,0 +1,28 @@
+#Run general script
+srun \
+  -p gpu \
+  -c 2 \
+  --mem=8G \
+  --qos=gpu40g \
+  --gres=gpu:7g.40gb:1 \
+  --time=02:00:00 \
+  --pty bash -l
+After that you can use python or papermill on folder you want
+
+#Run Singularity with Srun directly
+#First, choose QOS in terminal
+srun \
+  -p gpu \
+  -c 2 \
+  --mem=8G \
+  --qos=gpu40g \
+  --gres=gpu:7g.40gb:1 \
+  --time=02:00:00 \
+  --pty bash -l
+#Second, 
+singularity exec --nv \
+  --pwd /workspace \
+  --bind "$PROJECT:/workspace:rw" \
+  "$IMAGE" \
+  "$VENV/bin/python" \
+  /workspace/script1.py

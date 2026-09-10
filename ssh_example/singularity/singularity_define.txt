@@ -1,0 +1,6 @@
+#Defining Paths (Should save this)
+#Do this every time you open new session and want to use this
+PROJECT=/data/project/your_username/your_project
+IMAGE=$PROJECT/containers/your_container.sif
+ENV_TAG=your_environment
+VENV=/workspace/.venv-$ENV_TAG

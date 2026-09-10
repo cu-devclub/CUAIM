@@ -1,0 +1,44 @@
+#Defining Paths (Should save this)
+#Do this every time you open new session and want to use this
+PROJECT=/data/project/your_username/your_project
+IMAGE=$PROJECT/containers/your_container.sif
+ENV_TAG=your_environment
+VENV=/workspace/.venv-$ENV_TAG
+
+
+
+#Check nvidia-smi inside environment
+singularity exec --nv \
+  --bind "$PROJECT:/workspace:rw" \
+  "$IMAGE" \
+  nvidia-smi
+
+
+#Create the environment:
+singularity exec --nv \
+  --bind "$PROJECT:/workspace:rw" \
+  "$IMAGE" \
+  python -m venv "$VENV"
+
+#Install torch separately (--nv for using GPU)
+singularity exec --nv \
+  --bind "$PROJECT:/workspace:rw" \
+  "$IMAGE" \
+  "$VENV/bin/python" -m pip install --no-cache-dir \
+  torch torchvision \
+  --index-url https://download.pytorch.org/whl/cu126
+
+#Install libraries (--nv for using GPU)
+singularity exec --nv \
+  --bind "$PROJECT:/workspace:rw" \
+  "$IMAGE" \
+  "$VENV/bin/python" -m pip install --no-cache-dir \
+  -r /workspace/requirements.txt
+
+#Uninstall libraries
+singularity exec --nv --bind "$PROJECT:/workspace:rw" \
+  "$IMAGE" \
+  "$VENV/bin/python" -m pip uninstall -y \
+  -r /workspace/requirements.txt
+#Completely reset virtual environment
+rm -rf -- "$PROJECT/.venv-$ENV_TAG"

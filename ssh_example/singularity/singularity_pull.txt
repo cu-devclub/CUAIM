@@ -1,0 +1,32 @@
+#Appropriate and practical way to pull container
+
+PROJECT=/data/project/your_username/your_project
+
+export SINGULARITY_CACHEDIR="$PROJECT/.singularity-cache-$USER"
+export SINGULARITY_TMPDIR="$PROJECT/.singularity-tmp-$USER"
+export TMPDIR="$PROJECT/tmp-$USER"
+
+mkdir -p "$SINGULARITY_CACHEDIR" "$SINGULARITY_TMPDIR" "$TMPDIR"
+
+singularity pull \
+  "$PROJECT/<singularity_name>.sif" \
+  docker://<pull_url>
+
+singularity cache clean --force
+
+
+#Defining Paths (Should save this)
+PROJECT=/data/project/your_username/your_project
+IMAGE=$PROJECT/containers/your_container.sif
+ENV_TAG=your_environment_name
+VENV=/workspace/.venv-$ENV_TAG
+
+#Check nvidia-smi inside environment
+singularity exec --nv \
+  --bind "$PROJECT:/workspace:rw" \
+  "$IMAGE" \
+  nvidia-smi
+
+
+
+
