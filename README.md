@@ -20,10 +20,10 @@ The manual is intended for students who are familiar with basic files and Python
 ## Files
 
 - `survival-manual-cuaim.pdf` — compiled user manual
-- `survival-manual-cuaim.tex` — LaTeX source
+- `survival-manual-cuaim.tex` — LaTeX source for anyone who wants to edit.
 - `figures/` — images used in the manual
 - `ssh_example/` — example SSH, Slurm, and Singularity scripts
-- `reference/` — related reference material
+- `reference/` — related reference material, including the official CUAIM manual
 
 ## Building the manual
 
@@ -44,8 +44,6 @@ The generated PDF will be saved as `survival-manual-cuaim.pdf`.
 
 ## Author
 
-Created by Peeradon Sarnkaew.
-
-For questions or corrections, contact:
+For inquiries, contact:
 
 `peeradonsarnkaew46@gmail.com`
